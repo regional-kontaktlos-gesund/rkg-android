@@ -27,23 +27,45 @@ class StoreFragment : Fragment() {
             Log.d("main", "map is ready!")
         }
 
-        val openingHours = OpeningHours(
-            OpeningHour("07:00", "14:00"),
-            OpeningHour("10:00", "18:00"),
-            OpeningHour("13:30", "19:30"),
-            OpeningHour("15:00", "20:00"),
-            OpeningHour("09:00", "13:00"),
-            OpeningHour("06:30", "12:00"),
-            OpeningHour("06:00", "11:30")
+        val openingHours = listOf(
+            OpeningHour("monday", "07:00", "14:00"),
+            OpeningHour("tuesday", "10:00", "18:00"),
+            OpeningHour("wednesday", "13:30", "19:30"),
+            OpeningHour("thursday", "15:00", "20:00"),
+            OpeningHour("friday", "09:00", "13:00"),
+            OpeningHour("saturday", "06:30", "12:00"),
+            OpeningHour("sunday", "06:00", "11:30")
         )
 
-        storeOpeningTimesMonday.text = getString(R.string.opening_hours_template, openingHours.monday.from, openingHours.monday.to)
-        storeOpeningTimesTuesday.text = getString(R.string.opening_hours_template, openingHours.tuesday.from, openingHours.tuesday.to)
-        storeOpeningTimesWednesday.text = getString(R.string.opening_hours_template, openingHours.wednesday.from, openingHours.wednesday.to)
-        storeOpeningTimesThursday.text = getString(R.string.opening_hours_template, openingHours.thursday.from, openingHours.thursday.to)
-        storeOpeningTimesFriday.text = getString(R.string.opening_hours_template, openingHours.friday.from, openingHours.friday.to)
-        storeOpeningTimesSaturday.text = getString(R.string.opening_hours_template, openingHours.saturday.from, openingHours.saturday.to)
-        storeOpeningTimesSunday.text = getString(R.string.opening_hours_template, openingHours.sunday.from, openingHours.sunday.to)
+        val monday = openingHours.firstOrNull { it.day == "monday" }
+        val tuesday = openingHours.firstOrNull { it.day == "tuesday" }
+        val wednesday = openingHours.firstOrNull { it.day == "wednesday" }
+        val thursday = openingHours.firstOrNull { it.day == "thursday" }
+        val friday = openingHours.firstOrNull { it.day == "friday" }
+        val saturday = openingHours.firstOrNull { it.day == "saturday" }
+        val sunday = openingHours.firstOrNull { it.day == "sunday" }
+
+        monday?.let {
+            storeOpeningTimesMonday.text = getString(R.string.opening_hours_template, monday.from, monday.to)
+        }
+        tuesday?.let {
+            storeOpeningTimesTuesday.text = getString(R.string.opening_hours_template, tuesday.from, tuesday.to)
+        }
+        wednesday?.let {
+            storeOpeningTimesWednesday.text = getString(R.string.opening_hours_template, wednesday.from, wednesday.to)
+        }
+        thursday?.let {
+            storeOpeningTimesThursday.text = getString(R.string.opening_hours_template, thursday.from, thursday.to)
+        }
+        friday?.let {
+            storeOpeningTimesFriday.text = getString(R.string.opening_hours_template, friday.from, friday.to)
+        }
+        saturday?.let {
+            storeOpeningTimesSaturday.text = getString(R.string.opening_hours_template, saturday.from, saturday.to)
+        }
+        sunday?.let {
+            storeOpeningTimesSunday.text = getString(R.string.opening_hours_template, sunday.from, sunday.to)
+        }
 
         storeOwnerEmail.text = "hans@luft.de"
         storeOwnerName.text = "Hans Luft - Erdbeeren"
