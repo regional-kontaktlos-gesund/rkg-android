@@ -4,6 +4,6 @@ data class SortimentItem(
     val name: String,
     val type: String, // enum?
     val price: Int,
-    val available: Int,
+    val availability: String, // Enum?
     val amount: String
 )

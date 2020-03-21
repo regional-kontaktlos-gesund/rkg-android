@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Regional Kontaktlos Gesund</string>
 
-    <string name="availability">Verfügbar:</string>
+    <string name="availability">Verfügbarkeit</string>
     <string name="price">Preis:</string>
     <string name="amount">Menge:</string>
 
@@ -22,4 +22,9 @@
     <string name="owner">Betreiber</string>
     <string name="email_label">E-Mail:</string>
     <string name="name_label">Name:</string>
+
+    <string name="availabilityFull">Genügend</string>
+    <string name="availabilityMedium">Wenig</string>
+    <string name="availabilityNone">Keine</string>
+    <string name="edit">Bearbeiten</string>
 </resources>

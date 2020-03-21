@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
 import org.wirvsvirus.rkg.R
 import org.wirvsvirus.rkg.model.SortimentItem
 import java.text.NumberFormat
@@ -29,14 +30,21 @@ class SortimentAdapter : RecyclerView.Adapter<SortimentAdapter.ViewHolder>() {
         holder.product.text = item.name
         holder.price.text = formatter.format(item.price/100)
         holder.amount.text = item.amount
-        holder.availability.text = item.available.toString()
         holder.icon.setImageResource(R.drawable.ic_launcher) // TODO map to real icons
+
+        when(item.availability) {
+            "full" -> holder.availabilityFull.isChecked = true
+            "medium" -> holder.availabilityMedium.isChecked = true
+            "none" -> holder.availabilityNone.isChecked = true
+        }
     }
 
     inner class ViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
         val icon: ImageView = rootView.findViewById(R.id.sortimentIcon)
         val price: TextView = rootView.findViewById(R.id.sortimentPriceValue)
-        val availability: TextView = rootView.findViewById(R.id.sortimentAvailiabilityValue)
+        val availabilityFull: Chip = rootView.findViewById(R.id.sortimentAvailabilityFull)
+        val availabilityMedium: Chip = rootView.findViewById(R.id.sortimentAvailabilityMedium)
+        val availabilityNone: Chip = rootView.findViewById(R.id.sortimentAvailabilityNone)
         val amount: TextView = rootView.findViewById(R.id.sortimentAmountValue)
         val product: TextView = rootView.findViewById(R.id.sortimentProduct)
     }
