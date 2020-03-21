@@ -1,16 +1,21 @@
 package org.wirvsvirus.rkg.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_login_register.*
 import org.wirvsvirus.rkg.MainActivity
 import org.wirvsvirus.rkg.R
 import org.wirvsvirus.rkg.api.RkgClient
+import org.wirvsvirus.rkg.getPrefs
+import org.wirvsvirus.rkg.model.Vendor
 import org.wirvsvirus.rkg.model.VendorSignup
+import org.wirvsvirus.rkg.putVendorId
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,15 +49,23 @@ class LoginRegisterFragment : Fragment() {
                 loginRegisterMail.text.toString(),
                 loginRegisterPassword.text.toString()
             )
-        ).enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
+        ).enqueue(object : Callback<Vendor> {
+            override fun onFailure(call: Call<Vendor>, t: Throwable) {
                 loginRegisterbutton.isEnabled = true
                 Snackbar.make(loginRegisterRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
             }
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                loginRegisterbutton.isEnabled = true
-                // TODO findNavController().navigate(R.id.storeEditFragment) // navigate to store edit so vendor can register a store
+            @SuppressLint("ApplySharedPref")
+            override fun onResponse(call: Call<Vendor>, response: Response<Vendor>) {
+                val vendorId = response.body()?._id
+                if (vendorId == null) {
+                    Snackbar.make(loginRegisterRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                    loginRegisterbutton.isEnabled = true
+                    return
+                }
+
+                requireContext().getPrefs().putVendorId(vendorId)
+                findNavController().navigate(R.id.storeEditFragment)
             }
         })
     }
