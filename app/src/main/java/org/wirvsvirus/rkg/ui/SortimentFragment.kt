@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_sortiment.*
 import org.wirvsvirus.rkg.R
@@ -29,7 +28,6 @@ class SortimentFragment : Fragment() {
 
         sortimentList.layoutManager = LinearLayoutManager(context)
         sortimentList.adapter = adapter
-        sortimentList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         // TODO remove mock
         adapter.items = listOf(

@@ -1,86 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="16dp"
+    android:layout_marginHorizontal="16dp"
+    app:cardElevation="4dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/sortimentIcon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/sortimentAmount"
-        app:layout_constraintEnd_toStartOf="@+id/sortimentAvailabilityLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sortimentAvailabilityLabel"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/sortimentAvailabilityLabel"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/availability"
-        app:layout_constraintStart_toEndOf="@+id/sortimentProduct"
-        app:layout_constraintTop_toBottomOf="@+id/sortimentProduct" />
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/sortimentPriceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/price"
-        app:layout_constraintStart_toStartOf="@+id/sortimentAvailabilityLabel"
-        app:layout_constraintTop_toBottomOf="@+id/sortimentAvailabilityLabel" />
+        <ImageView
+            android:id="@+id/sortimentIcon"
+            android:layout_width="72dp"
+            android:layout_height="74dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sortimentProduct"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/sortimentAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/amount"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/sortimentPriceLabel"
-        app:layout_constraintTop_toBottomOf="@+id/sortimentPriceLabel" />
+        <TextView
+            android:id="@+id/sortimentAvailabilityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/availability"
+            app:layout_constraintStart_toEndOf="@+id/sortimentIcon"
+            app:layout_constraintTop_toTopOf="@+id/sortimentIcon" />
 
-    <TextView
-        android:id="@+id/sortimentAvailiabilityValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/sortimentAvailabilityLabel"
-        app:layout_constraintTop_toTopOf="@+id/sortimentAvailabilityLabel"
-        tools:text="200" />
+        <TextView
+            android:id="@+id/sortimentPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/price"
+            app:layout_constraintStart_toStartOf="@+id/sortimentAvailabilityLabel"
+            app:layout_constraintTop_toBottomOf="@+id/sortimentAvailabilityLabel" />
 
-    <TextView
-        android:id="@+id/sortimentPriceValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/sortimentAvailiabilityValue"
-        app:layout_constraintTop_toBottomOf="@+id/sortimentAvailiabilityValue"
-        tools:text="3,00 €" />
+        <TextView
+            android:id="@+id/sortimentAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/amount"
+            app:layout_constraintStart_toStartOf="@+id/sortimentPriceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/sortimentPriceLabel" />
 
-    <TextView
-        android:id="@+id/sortimentAmountValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/sortimentPriceValue"
-        app:layout_constraintTop_toBottomOf="@+id/sortimentPriceValue"
-        tools:text="500g" />
+        <TextView
+            android:id="@+id/sortimentAvailiabilityValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/sortimentAvailabilityLabel"
+            app:layout_constraintTop_toTopOf="@+id/sortimentAvailabilityLabel"
+            tools:text="200" />
 
-    <TextView
-        android:id="@+id/sortimentProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Erdbeeren" />
+        <TextView
+            android:id="@+id/sortimentPriceValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/sortimentAvailabilityLabel"
+            app:layout_constraintTop_toTopOf="@+id/sortimentPriceLabel"
+            tools:text="3,00 €" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/sortimentAmountValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/sortimentAvailabilityLabel"
+            app:layout_constraintTop_toTopOf="@+id/sortimentAmount"
+            tools:text="500g" />
+
+        <TextView
+            android:id="@+id/sortimentProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Erdbeeren" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
