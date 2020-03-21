@@ -30,13 +30,21 @@ class SortimentAdapter : RecyclerView.Adapter<SortimentAdapter.ViewHolder>() {
         holder.product.text = item.name
         holder.price.text = formatter.format(item.price/100)
         holder.amount.text = item.amount
-        holder.icon.setImageResource(R.drawable.ic_launcher) // TODO map to real icons
 
         when(item.availability) {
             "full" -> holder.availabilityFull.isChecked = true
             "medium" -> holder.availabilityMedium.isChecked = true
             "none" -> holder.availabilityNone.isChecked = true
         }
+
+        val illusRes = when(item.type) {
+            "erdbeeren" -> R.drawable.illu_strawberry
+            "spargel" -> R.drawable.illu_asparagus
+            "kirschen" -> R.drawable.illu_cherry
+            else -> R.drawable.ic_launcher
+        }
+        holder.icon.setImageResource(illusRes)
+
     }
 
     inner class ViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {

@@ -31,14 +31,10 @@ class SortimentFragment : Fragment() {
 
         // TODO remove mock
         adapter.items = listOf(
-            SortimentItem("Erdbeeren", "errdbeeren", 300, "full", "500g"),
+            SortimentItem("Erdbeeren", "erdbeeren", 300, "full", "500g"),
             SortimentItem("Spargel", "spargel", 500, "medium", "500g"),
             SortimentItem("Kirschen", "kirschen", 400, "none", "500g")
         )
         adapter.notifyDataSetChanged()
-    }
-
-    companion object {
-        fun newInstance() = SortimentFragment()
     }
 }
