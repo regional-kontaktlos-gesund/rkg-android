@@ -25,12 +25,9 @@ jobs:
         with:
           name: app
           path: app/build/outputs/apk/debug/app-debug.apk
-  slackNotification:
-    name: Slack Notification
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2.0.0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: "RKG Android"
+          SLACK_ICON: "https://i.imgur.com/vGZTg9P.png"
