@@ -27,4 +27,14 @@
     <string name="availabilityMedium">Wenig</string>
     <string name="availabilityNone">Keine</string>
     <string name="edit">Bearbeiten</string>
+
+    <string name="mail">E-Mail</string>
+    <string name="password">Passwort</string>
+    <string name="name">Name</string>
+    <string name="register">Registrieren</string>
+    <string name="errorMail">E-Mail Adresse ungültig</string>
+    <string name="errorName">Name ungültig</string>
+    <string name="errorPassword">Passwort ungültig</string>
+
+    <string name="genericError">Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.</string>
 </resources>

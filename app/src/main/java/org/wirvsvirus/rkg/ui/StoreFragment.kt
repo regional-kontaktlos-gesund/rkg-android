@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_store.*
 import org.wirvsvirus.rkg.R
 import org.wirvsvirus.rkg.model.OpeningHour
-import org.wirvsvirus.rkg.model.OpeningHours
 
 class StoreFragment : Fragment() {
 

@@ -1,6 +1,7 @@
 package org.wirvsvirus.rkg
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.main_activity.*
@@ -25,6 +26,14 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnNavigationItemSelectedListener true
         }
+    }
+
+    fun hideBottomNav() {
+        bottomNav.visibility = View.GONE
+    }
+
+    fun showBottomNav() {
+        bottomNav.visibility = View.VISIBLE
     }
 
     override fun onSupportNavigateUp(): Boolean = findNavController(R.id.navHost).navigateUp()

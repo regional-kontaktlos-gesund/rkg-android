@@ -274,6 +274,7 @@
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_edit"
-        app:tint="@color/white" />
+        android:backgroundTint="@color/colorAccent"
+        app:tint="@color/white"
+        app:srcCompat="@drawable/ic_edit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

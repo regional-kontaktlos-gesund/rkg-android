@@ -14,10 +14,18 @@
         android:id="@+id/storeFragment"
         android:name="org.wirvsvirus.rkg.ui.StoreFragment"
         android:label="StoreFragment"
-        tools:layout="@layout/fragment_store" />
+        tools:layout="@layout/fragment_store" >
+        <action
+            android:id="@+id/action_storeFragment_to_storeEditFragment"
+            app:destination="@id/storeEditFragment" />
+    </fragment>
     <fragment
         android:id="@+id/storeEditFragment"
         android:name="org.wirvsvirus.rkg.ui.StoreEditFragment"
         android:label="StoreEditFragment"
         tools:layout="@layout/fragment_store_edit"/>
+    <fragment
+        android:id="@+id/loginRegisterFragment"
+        android:name="org.wirvsvirus.rkg.ui.LoginRegisterFragment"
+        android:label="LoginRegisterFragment" />
 </navigation>

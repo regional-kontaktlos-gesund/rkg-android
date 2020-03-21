@@ -4,14 +4,13 @@ import org.wirvsvirus.rkg.model.Product
 import org.wirvsvirus.rkg.model.Store
 import org.wirvsvirus.rkg.model.VendorSignup
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 interface RkgService {
 
     // Vendor
     @POST("vendors/signup")
-    fun vendorSignUp(@Body vendorSignup: VendorSignup): Call<Void>
+    fun vendorSignUp(@Body vendorSignup: VendorSignup): Call<String>
 
     @GET("vendors/verify/{verifyCode}")
     fun vendorVerify(@Path("verifyCode") verifyCode: String): Call<Void>
