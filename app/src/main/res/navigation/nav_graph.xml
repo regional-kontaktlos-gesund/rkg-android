@@ -14,7 +14,7 @@
         android:id="@+id/storeFragment"
         android:name="org.wirvsvirus.rkg.ui.StoreFragment"
         android:label="StoreFragment"
-        tools:layout="@layout/fragment_store" >
+        tools:layout="@layout/fragment_store">
         <action
             android:id="@+id/action_storeFragment_to_storeEditFragment"
             app:destination="@id/storeEditFragment" />
@@ -23,9 +23,15 @@
         android:id="@+id/storeEditFragment"
         android:name="org.wirvsvirus.rkg.ui.StoreEditFragment"
         android:label="StoreEditFragment"
-        tools:layout="@layout/fragment_store_edit"/>
+        tools:layout="@layout/fragment_store_edit" />
     <fragment
         android:id="@+id/loginRegisterFragment"
         android:name="org.wirvsvirus.rkg.ui.LoginRegisterFragment"
-        android:label="LoginRegisterFragment" />
+        android:label="LoginRegisterFragment"
+        tools:layout="@layout/fragment_login_register" />
+    <fragment
+        android:id="@+id/orderFragment"
+        android:name="org.wirvsvirus.rkg.ui.OrderFragment"
+        android:label="OrderFragment"
+        tools:layout="@layout/fragment_orders" />
 </navigation>

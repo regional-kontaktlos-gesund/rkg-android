@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
             val dest = when (it.itemId) {
                 R.id.navSortiment -> R.id.sortimentFragment
                 R.id.navStore -> R.id.storeFragment
+                R.id.navOrders -> R.id.orderFragment
                 // ...
                 else -> -1
             }
