@@ -15,4 +15,9 @@
         android:name="org.wirvsvirus.rkg.ui.StoreFragment"
         android:label="StoreFragment"
         tools:layout="@layout/fragment_store" />
+    <fragment
+        android:id="@+id/storeEditFragment"
+        android:name="org.wirvsvirus.rkg.ui.StoreEditFragment"
+        android:label="StoreEditFragment"
+        tools:layout="@layout/fragment_store_edit"/>
 </navigation>

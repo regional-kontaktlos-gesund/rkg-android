@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_store.*
 import org.wirvsvirus.rkg.R
 import org.wirvsvirus.rkg.model.OpeningHour
@@ -46,6 +47,10 @@ class StoreFragment : Fragment() {
 
         storeOwnerEmail.text = "hans@luft.de"
         storeOwnerName.text = "Hans Luft - Erdbeeren"
+
+        storeEdit.setOnClickListener {
+            findNavController().navigate(R.id.storeEditFragment)
+        }
     }
 
     override fun onResume() {
