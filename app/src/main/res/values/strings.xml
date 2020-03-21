@@ -4,4 +4,8 @@
     <string name="availability">Verfügbar:</string>
     <string name="price">Preis:</string>
     <string name="amount">Menge:</string>
+
+    <string name="menuOrders">Bestellungen</string>
+    <string name="menuSortiment">Sortiment</string>
+    <string name="menuStore">Mein Stand</string>
 </resources>
