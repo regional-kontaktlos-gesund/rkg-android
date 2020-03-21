@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/storeMap"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:cameraTargetLat="51.163375"
+        app:cameraTargetLng="10.447683"
+        app:cameraZoom="15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/storeMap">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/storeOpeningTimesCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/opening_hours"
+                        android:textColor="#000"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesMondayLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/monday_short"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/storeOpeningTimesTitle" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesTuesdayLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/tuesday_short"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesMondayLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/storeOpeningTimesMondayLabel" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesWednesdayLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/wednesday_short"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesTuesdayLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/storeOpeningTimesTuesdayLabel" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesThursdayLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/thursday_short"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesWednesdayLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/storeOpeningTimesWednesdayLabel" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesFridayLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/friday_short"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesThursdayLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/storeOpeningTimesThursdayLabel" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesSaturdayLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/saturday_short"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesFridayLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/storeOpeningTimesFridayLabel" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesSundayLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/sunday_short"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesSaturdayLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/storeOpeningTimesSaturdayLabel" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesMonday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@id/storeOpeningTimesMondayLabel"
+                        app:layout_constraintTop_toTopOf="@id/storeOpeningTimesMondayLabel"
+                        tools:text="10:00 - 14:00 Uhr" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesTuesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesMonday"
+                        app:layout_constraintTop_toTopOf="@+id/storeOpeningTimesTuesdayLabel"
+                        tools:text="10:00 - 14:00 Uhr" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesWednesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesMonday"
+                        app:layout_constraintTop_toTopOf="@+id/storeOpeningTimesWednesdayLabel"
+                        tools:text="10:00 - 14:00 Uhr" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesThursday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesMonday"
+                        app:layout_constraintTop_toTopOf="@+id/storeOpeningTimesThursdayLabel"
+                        tools:text="10:00 - 14:00 Uhr" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesFriday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesMonday"
+                        app:layout_constraintTop_toTopOf="@+id/storeOpeningTimesFridayLabel"
+                        tools:text="10:00 - 14:00 Uhr" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesSaturday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesMonday"
+                        app:layout_constraintTop_toTopOf="@+id/storeOpeningTimesSaturdayLabel"
+                        tools:text="10:00 - 14:00 Uhr" />
+
+                    <TextView
+                        android:id="@+id/storeOpeningTimesSunday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOpeningTimesMonday"
+                        app:layout_constraintTop_toTopOf="@+id/storeOpeningTimesSundayLabel"
+                        tools:text="10:00 - 14:00 Uhr" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/storeOwnerCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/storeOpeningTimesCard">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/storeOwnerTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="@string/owner"
+                        android:textColor="#000"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/storeOwnerEmailLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/email_label"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOwnerTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/storeOwnerTitle" />
+
+                    <TextView
+                        android:id="@+id/storeOwnerNameLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/name_label"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOwnerEmailLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/storeOwnerEmailLabel" />
+
+                    <TextView
+                        android:id="@+id/storeOwnerEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@+id/storeOwnerEmailLabel"
+                        app:layout_constraintTop_toTopOf="@+id/storeOwnerEmailLabel"
+                        tools:text="E-Mail: hans@luft.de" />
+
+                    <TextView
+                        android:id="@+id/storeOwnerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/storeOwnerEmail"
+                        app:layout_constraintTop_toTopOf="@+id/storeOwnerNameLabel"
+                        tools:text="Name: Hans Luft - Erdbeeren" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/storeEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_edit" />
+</androidx.constraintlayout.widget.ConstraintLayout>

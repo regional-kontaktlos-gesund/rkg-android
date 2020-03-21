@@ -8,4 +8,18 @@
     <string name="menuOrders">Bestellungen</string>
     <string name="menuSortiment">Sortiment</string>
     <string name="menuStore">Mein Stand</string>
+
+    <string name="opening_hours_template">%1$s - %2$s Uhr</string>
+    <string name="opening_hours">Öffnungszeiten</string>
+    <string name="monday_short">Mo</string>
+    <string name="tuesday_short">Di</string>
+    <string name="wednesday_short">Mi</string>
+    <string name="thursday_short">Do</string>
+    <string name="friday_short">Fr</string>
+    <string name="saturday_short">Sa</string>
+    <string name="sunday_short">So</string>
+
+    <string name="owner">Betreiber</string>
+    <string name="email_label">E-Mail:</string>
+    <string name="name_label">Name:</string>
 </resources>

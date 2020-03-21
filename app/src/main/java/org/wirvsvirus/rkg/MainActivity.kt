@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.main_activity.*
-import org.wirvsvirus.rkg.ui.SortimentFragment
-import org.wirvsvirus.rkg.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         bottomNav.setOnNavigationItemSelectedListener {
             val dest = when (it.itemId) {
                 R.id.navSortiment -> R.id.sortimentFragment
+                R.id.navStore -> R.id.storeFragment
                 // ...
                 else -> -1
             }
@@ -27,4 +26,6 @@ class MainActivity : AppCompatActivity() {
             return@setOnNavigationItemSelectedListener true
         }
     }
+
+    override fun onSupportNavigateUp(): Boolean = findNavController(R.id.navHost).navigateUp()
 }

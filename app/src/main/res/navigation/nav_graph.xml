@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph.xml"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
     app:startDestination="@id/sortimentFragment">
 
     <fragment
         android:id="@+id/sortimentFragment"
         android:name="org.wirvsvirus.rkg.ui.SortimentFragment"
-        android:label="SortimentFragment" />
+        android:label="SortimentFragment"
+        tools:layout="@layout/fragment_sortiment" />
+    <fragment
+        android:id="@+id/storeFragment"
+        android:name="org.wirvsvirus.rkg.ui.StoreFragment"
+        android:label="StoreFragment"
+        tools:layout="@layout/fragment_store" />
 </navigation>

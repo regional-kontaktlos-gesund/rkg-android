@@ -1,6 +1,6 @@
 package org.wirvsvirus.rkg.model
 
-data class Farmer (
+data class Owner(
     val name: String,
-    val productList: List<Product>
+    val email: String
 )
