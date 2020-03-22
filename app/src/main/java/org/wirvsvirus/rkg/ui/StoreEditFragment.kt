@@ -55,7 +55,7 @@ class StoreEditFragment : Fragment() {
 
         storePickOpeningStartButton.setOnClickListener {
             val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                startDate = String.format("%02d:%02d Uhr", hourOfDay, minute)
+                startDate = String.format("%02d:%02d", hourOfDay, minute)
                 storePickOpeningStartLabel.text = startDate
             }
             TimePickerDialog(activity, listener, 6, 0, DateFormat.is24HourFormat(activity)).show()
@@ -63,7 +63,7 @@ class StoreEditFragment : Fragment() {
 
         storePickOpeningEndButton.setOnClickListener {
             val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                endDate = String.format("%02d:%02d Uhr", hourOfDay, minute)
+                endDate = String.format("%02d:%02d", hourOfDay, minute)
                 storePickOpeningEndLabel.text = endDate
             }
             TimePickerDialog(activity, listener, 18, 0, DateFormat.is24HourFormat(activity)).show()
@@ -142,7 +142,11 @@ class StoreEditFragment : Fragment() {
             // TODO: Do something with the data
             storeEditLocation.text =
                 getString(R.string.locationCoordinateTemplate, it.latitude, it.longitude)
-            loadedStore = loadedStore.copy(latitude = it.latitude, longitude = it.longitude, stripeAccountId = "bla")
+            loadedStore = loadedStore.copy(
+                latitude = it.latitude,
+                longitude = it.longitude,
+                stripeAccountId = "bla"
+            )
         }.addOnFailureListener {
             showSnackbar(getString(R.string.locationRetrievalError))
         }
@@ -218,11 +222,20 @@ class StoreEditFragment : Fragment() {
                         }
                         createdStore._id?.let {
                             context?.getPrefs()?.putStoreId(it)
-                            loadedStore = loadedStore.copy(_id = it, vendor = createdStore.vendor, name = createdStore.name, stripeAccountId = "bla")
+                            loadedStore = loadedStore.copy(
+                                _id = it,
+                                vendor = createdStore.vendor,
+                                name = createdStore.name,
+                                stripeAccountId = "bla"
+                            )
                         }
                         updateStore()
                     } else {
-                        Snackbar.make(rootViewStoreEdit, R.string.genericError, Snackbar.LENGTH_SHORT)
+                        Snackbar.make(
+                                rootViewStoreEdit,
+                                R.string.genericError,
+                                Snackbar.LENGTH_SHORT
+                            )
                             .show()
                     }
                 }
@@ -231,7 +244,11 @@ class StoreEditFragment : Fragment() {
     }
 
     private fun updateStore() {
-        loadedStore = loadedStore.copy(name = storeEditNameEditText.text.toString(), stripeAccountId = "bla")
+        loadedStore = loadedStore.copy(
+            name = storeEditNameEditText.text.toString(),
+            openingHours = getOpeningHours(),
+            stripeAccountId = "bla"
+        )
         context?.getPrefs()?.getStoreId()?.let { storeId ->
             RkgClient.service.updateStore(storeId, loadedStore)
                 .enqueue(object : Callback<Void> {
@@ -264,6 +281,22 @@ class StoreEditFragment : Fragment() {
                     }
                 })
         }
+    }
+
+    private fun getOpeningHours(): List<OpeningHour> {
+        val result = mutableListOf<OpeningHour>()
+        getListOfStoreOpenSwitches().forEachIndexed { index, element ->
+            when (index) {
+                0 -> if (element.isChecked) { result.add(OpeningHour("monday", startDate!!, endDate!!)) }
+                1 -> if (element.isChecked) { result.add(OpeningHour("tuesday", startDate!!, endDate!!)) }
+                2 -> if (element.isChecked) { result.add(OpeningHour("wednesday", startDate!!, endDate!!)) }
+                3 -> if (element.isChecked) { result.add(OpeningHour("thursday", startDate!!, endDate!!)) }
+                4 -> if (element.isChecked) { result.add(OpeningHour("friday", startDate!!, endDate!!)) }
+                5 -> if (element.isChecked) { result.add(OpeningHour("saturday", startDate!!, endDate!!)) }
+                6 -> if (element.isChecked) { result.add(OpeningHour("sunday", startDate!!, endDate!!)) }
+            }
+        }
+        return result
     }
 
     private fun showSnackbar(errorText: String) {
