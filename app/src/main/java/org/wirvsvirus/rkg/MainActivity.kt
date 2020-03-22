@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.iterator
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
@@ -12,6 +13,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
+        val navHost =
+            supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment?
+        val navController = navHost!!.navController
+
+        val navInflater = navController.navInflater
+        val graph = navInflater.inflate(R.navigation.nav_graph)
+
+        if (getPrefs().getVendorId() == null) {
+            graph.startDestination = R.id.loginRegisterFragment
+        } else {
+            graph.startDestination = R.id.orderFragment
+        }
+        navController.graph = graph
 
         bottomNav.setOnNavigationItemSelectedListener {
             val dest = when (it.itemId) {
