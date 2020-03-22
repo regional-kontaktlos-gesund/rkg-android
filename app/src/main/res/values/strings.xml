@@ -28,6 +28,9 @@
     <string name="availabilityLow">Wenig</string>
     <string name="availabilityNone">Keine</string>
     <string name="edit">Bearbeiten</string>
+    <string name="delete">Löschen</string>
+    <string name="deleteConfirm">Möchten Sie das Produkt wirklich löschen?</string>
+    <string name="changedSuccessfully">Erfolgreich geändert.</string>
 
     <string name="mail">E-Mail</string>
     <string name="password">Passwort</string>

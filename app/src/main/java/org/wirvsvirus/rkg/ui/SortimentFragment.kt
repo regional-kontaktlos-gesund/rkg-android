@@ -52,6 +52,63 @@ class SortimentFragment : Fragment() {
             editingProduct = product
             showAddEditDialog()
         }
+
+        adapter.deleteListener = { product ->
+            showDeleteDialog(product)
+        }
+
+        adapter.availabilityListener = { product, chipId ->
+            updateAvailability(product, chipId)
+        }
+    }
+
+    private fun updateAvailability(product: Product, chipId: Int) {
+        val availability = when(chipId) {
+            R.id.sortimentAvailabilityNone -> "none"
+            R.id.sortimentAvailabilityLow -> "low"
+            R.id.sortimentAvailabilityMedium -> "medium"
+            R.id.sortimentAvailabilityFull -> "full"
+            else -> return
+        }
+
+        val newProduct = product.copy(stock = availability)
+        RkgClient.service.updateProduct("5e7637033530e88ed953fd1c", newProduct._id!!, newProduct).enqueue(object : Callback<Void> {
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (!response.isSuccessful) {
+                    onFailure(call, Throwable())
+                    return
+                }
+                Snackbar.make(sortimentRoot, R.string.changedSuccessfully, Snackbar.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun showDeleteDialog(product: Product) {
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.deleteConfirm)
+            .setPositiveButton(R.string.delete) { _, _  -> deleteProduct(product) }
+            .setNegativeButton(R.string.cancel) { _, _  -> }
+            .show()
+    }
+
+    private fun deleteProduct(product: Product) {
+        RkgClient.service.deleteProduct("5e7637033530e88ed953fd1c", product._id!!).enqueue(object : Callback<Void> {
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (!response.isSuccessful) {
+                    onFailure(call, Throwable())
+                    return
+                }
+                loadProducts(false)
+            }
+        })
     }
 
     private fun showAddEditDialog() {
