@@ -3,6 +3,7 @@ package org.wirvsvirus.rkg.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ class SortimentAdapter : RecyclerView.Adapter<SortimentAdapter.ViewHolder>() {
     private val formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY)
 
     var items: List<Product> = emptyList()
+    var editListener: ((Product) -> Unit)? = null
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,7 +30,7 @@ class SortimentAdapter : RecyclerView.Adapter<SortimentAdapter.ViewHolder>() {
         val item = items[position]
 
         holder.product.text = item.name
-        holder.price.text = formatter.format(item.price/100)
+        holder.price.text = formatter.format(item.price/100f)
         holder.amount.text = item.unit
 
         when(item.stock) {
@@ -44,7 +46,9 @@ class SortimentAdapter : RecyclerView.Adapter<SortimentAdapter.ViewHolder>() {
             else -> R.drawable.ic_launcher
         }
         holder.icon.setImageResource(illusRes)
-
+        holder.editButton.setOnClickListener {
+            editListener?.invoke(item)
+        }
     }
 
     inner class ViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
@@ -56,5 +60,6 @@ class SortimentAdapter : RecyclerView.Adapter<SortimentAdapter.ViewHolder>() {
         val availabilityNone: Chip = rootView.findViewById(R.id.sortimentAvailabilityNone)
         val amount: TextView = rootView.findViewById(R.id.sortimentAmountValue)
         val product: TextView = rootView.findViewById(R.id.sortimentProduct)
+        val editButton: Button = rootView.findViewById(R.id.sortimentEditButton)
     }
 }

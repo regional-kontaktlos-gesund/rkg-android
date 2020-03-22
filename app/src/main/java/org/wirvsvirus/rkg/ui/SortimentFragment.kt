@@ -19,13 +19,14 @@ import org.wirvsvirus.rkg.ui.adapter.SortimentAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
 import kotlin.math.roundToLong
 
 class SortimentFragment : Fragment() {
 
     private val adapter = SortimentAdapter()
     private var addEditDialog: AlertDialog? = null
-    private var isAdding: Boolean = true
+    private var editingProduct: Product? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,16 +45,35 @@ class SortimentFragment : Fragment() {
         loadProducts(false)
 
         fabAddItem.setOnClickListener {
-            isAdding = true
-            addEditDialog = AlertDialog.Builder(requireContext())
-                .setView(R.layout.dialog_add_edit_product)
-                .setPositiveButton(R.string.save) { _, _ ->
-                    saveData()
-                }
-                .setNegativeButton(R.string.cancel) { _, _ -> }
-                .create()
-            addEditDialog?.show()
+            showAddEditDialog()
         }
+
+        adapter.editListener = { product ->
+            editingProduct = product
+            showAddEditDialog()
+        }
+    }
+
+    private fun showAddEditDialog() {
+        addEditDialog = AlertDialog.Builder(requireContext())
+            .setView(R.layout.dialog_add_edit_product)
+            .setPositiveButton(R.string.save) { _, _ ->
+                saveData()
+            }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
+            .create()
+        addEditDialog?.show()
+
+        if (editingProduct != null) {
+            val dialog = addEditDialog!!
+            val product = editingProduct!!
+            val items = requireContext().resources.getStringArray(R.array.productTypes)
+            dialog.findViewById<AppCompatSpinner>(R.id.productTypeSpinner)!!.setSelection(items.indexOfFirst { it == product.type })
+            dialog.findViewById<TextInputEditText>(R.id.productAmount)!!.setText(product.unit)
+            dialog.findViewById<TextInputEditText>(R.id.productName)!!.setText(product.name)
+            dialog.findViewById<TextInputEditText>(R.id.productPrice)!!.setText(NumberFormat.getNumberInstance().format(product.price/100f).replace('.', ','))
+        }
+
     }
 
     private fun loadProducts(scrollToBottom: Boolean) {
@@ -90,24 +110,43 @@ class SortimentFragment : Fragment() {
         val priceString = dialog.findViewById<TextInputEditText>(R.id.productPrice)?.text!!.toString()
         val price = (priceString.replace(',', '.').toDouble() * 100).roundToLong()
 
-        val newProduct = Product(
-            name, type, amount, price, "none"
-        )
-
         // TODO use our storeId
-        RkgClient.service.addProduct("5e7637033530e88ed953fd1c", newProduct).enqueue(object : Callback<Void>{
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (!response.isSuccessful) {
-                    onFailure(call, Throwable())
-                    return
+        if (editingProduct == null) {
+            val newProduct = Product(
+                null, name, type, amount, price, "none"
+            )
+            RkgClient.service.addProduct("5e7637033530e88ed953fd1c", newProduct).enqueue(object : Callback<Void>{
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
                 }
 
-                loadProducts(true)
-            }
-        })
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (!response.isSuccessful) {
+                        onFailure(call, Throwable())
+                        return
+                    }
+
+                    loadProducts(true)
+                }
+            })
+        } else {
+            val newProduct = Product(
+                editingProduct!!._id, name, type, amount, price, editingProduct!!.stock
+            )
+            RkgClient.service.updateProduct("5e7637033530e88ed953fd1c", editingProduct!!._id!!, newProduct).enqueue(object : Callback<Void> {
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
+                }
+
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (!response.isSuccessful) {
+                        onFailure(call, Throwable())
+                        return
+                    }
+
+                    loadProducts(false)
+                }
+            })
+        }
     }
 }
