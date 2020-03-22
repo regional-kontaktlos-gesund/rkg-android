@@ -83,31 +83,31 @@ class StoreFragment : Fragment() {
             monday?.let {
                 storeOpeningTimesMonday.text =
                     getString(R.string.opening_hours_template, monday.from, monday.to)
-            }
+            } ?: run { storeOpeningTimesMonday.text = getString(R.string.closed) }
             tuesday?.let {
                 storeOpeningTimesTuesday.text =
                     getString(R.string.opening_hours_template, tuesday.from, tuesday.to)
-            }
+            } ?: run { storeOpeningTimesTuesday.text = getString(R.string.closed) }
             wednesday?.let {
                 storeOpeningTimesWednesday.text =
                     getString(R.string.opening_hours_template, wednesday.from, wednesday.to)
-            }
+            } ?: run { storeOpeningTimesWednesday.text = getString(R.string.closed) }
             thursday?.let {
                 storeOpeningTimesThursday.text =
                     getString(R.string.opening_hours_template, thursday.from, thursday.to)
-            }
+            } ?: run { storeOpeningTimesThursday.text = getString(R.string.closed) }
             friday?.let {
                 storeOpeningTimesFriday.text =
                     getString(R.string.opening_hours_template, friday.from, friday.to)
-            }
+            } ?: run { storeOpeningTimesFriday.text = getString(R.string.closed) }
             saturday?.let {
                 storeOpeningTimesSaturday.text =
                     getString(R.string.opening_hours_template, saturday.from, saturday.to)
-            }
+            } ?: run { storeOpeningTimesSaturday.text = getString(R.string.closed) }
             sunday?.let {
                 storeOpeningTimesSunday.text =
                     getString(R.string.opening_hours_template, sunday.from, sunday.to)
-            }
+            } ?: run { storeOpeningTimesSunday.text = getString(R.string.closed) }
 
             storeOwnerEmail.text = context?.getPrefs()?.getVendorEmail() ?: ""
             storeOwnerName.text = store.name
