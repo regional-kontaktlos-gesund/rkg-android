@@ -73,7 +73,7 @@ class SortimentFragment : Fragment() {
         }
 
         val newProduct = product.copy(stock = availability)
-        RkgClient.service.updateProduct("5e7637033530e88ed953fd1c", newProduct._id!!, newProduct).enqueue(object : Callback<Void> {
+        RkgClient.service.updateProduct(requireContext().getPrefs().getStoreId()!!, newProduct._id!!, newProduct).enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
             }
@@ -97,7 +97,7 @@ class SortimentFragment : Fragment() {
     }
 
     private fun deleteProduct(product: Product) {
-        RkgClient.service.deleteProduct("5e7637033530e88ed953fd1c", product._id!!).enqueue(object : Callback<Void> {
+        RkgClient.service.deleteProduct(requireContext().getPrefs().getStoreId()!!, product._id!!).enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
             }
