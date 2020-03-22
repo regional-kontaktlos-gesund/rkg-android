@@ -5,9 +5,7 @@ import android.app.TimePickerDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -38,6 +36,8 @@ class StoreEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
 
         fusedLocationProvider = LocationServices.getFusedLocationProviderClient(requireActivity())
 
@@ -72,18 +72,19 @@ class StoreEditFragment : Fragment() {
                 retrieveCurrentLocation()
             }
         }
+    }
 
-        storeEditSave.setOnClickListener {
-            if (startDate == null || endDate == null || getListOfStoreOpenSwitches().all { !it.isChecked }) {
-                showSnackbar(getString(R.string.openingTimesEmptyError))
-            } else {
-                showSnackbar(getString(R.string.openingTimesSaved))
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_store_edit, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
-                // TODO API-Call einbauen
-
-                findNavController().navigate(R.id.action_storeEditFragment_to_storeFragment)
-            }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menuStoreEditSave -> saveData()
         }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun loadStoreDataToView() {
@@ -164,6 +165,18 @@ class StoreEditFragment : Fragment() {
             } else {
                 showSnackbar(getString(R.string.locationPermissionDeniedError))
             }
+        }
+    }
+
+    private fun saveData() {
+        if (startDate == null || endDate == null || getListOfStoreOpenSwitches().all { !it.isChecked }) {
+            showSnackbar(getString(R.string.openingTimesEmptyError))
+        } else {
+            showSnackbar(getString(R.string.openingTimesSaved))
+
+            // TODO API-Call einbauen
+
+            findNavController().navigate(R.id.action_storeEditFragment_to_storeFragment)
         }
     }
 
