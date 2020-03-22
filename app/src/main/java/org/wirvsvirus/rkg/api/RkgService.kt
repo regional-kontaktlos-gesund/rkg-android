@@ -36,7 +36,7 @@ interface RkgService {
     @GET("stores/{storeId}/products")
     fun getProducts(@Path("storeId") storeId: String): Call<List<Product>>
 
-    @POST("stores/{storeId}/products")
+    @PATCH("stores/{storeId}/products")
     fun addProduct(@Path("storeId") storeId: String, @Body product: Product): Call<Void>
 
     @PATCH("stores/{storeId}/products/{productId}")

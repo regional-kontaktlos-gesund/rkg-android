@@ -45,4 +45,14 @@
     <string name="locationRetrievalError">Fehler beim Ermitteln des Standorts</string>
 
     <string name="priceTemplate">Gesamtpreis: %s</string>
+
+    <string-array name="productTypes">
+        <item>Spargel</item>
+        <item>Erdbeere</item>
+    </string-array>
+    <string name="type">Typ</string>
+    <string name="save">Speichern</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="amountHint">Menge</string>
+    <string name="priceHint">Preis</string>
 </resources>
