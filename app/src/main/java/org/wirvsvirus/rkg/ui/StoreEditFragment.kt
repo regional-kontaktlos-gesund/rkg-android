@@ -50,7 +50,7 @@ class StoreEditFragment : Fragment() {
         loadStoreDataToView()
 
         storePickOpeningStartButton.setOnClickListener {
-            val listener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+            val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                 startDate = String.format("%02d:%02d Uhr", hourOfDay, minute)
                 storePickOpeningStartLabel.text = startDate
             }
@@ -58,7 +58,7 @@ class StoreEditFragment : Fragment() {
         }
 
         storePickOpeningEndButton.setOnClickListener {
-            val listener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+            val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                 endDate = String.format("%02d:%02d Uhr", hourOfDay, minute)
                 storePickOpeningEndLabel.text = endDate
             }
@@ -88,7 +88,7 @@ class StoreEditFragment : Fragment() {
 
     private fun loadStoreDataToView() {
         loadedStore?.let { store ->
-            storeEditLocation.text = "Latitude: ${store.latitude} | Longitude: ${store.longitude}"
+            storeEditLocation.text = getString(R.string.locationCoordinateTemplate, store.latitude, store.longitude)
             loadOpeningHoursToView(store.openingHours)
             storeEditOwnerName.text = store.name
             storeEditOwnerEmail.text = context?.getPrefs()?.getVendorEmail() ?: ""
@@ -131,7 +131,7 @@ class StoreEditFragment : Fragment() {
     private fun retrieveCurrentLocation() {
         fusedLocationProvider.lastLocation.addOnSuccessListener {
             // TODO: Do something with the data
-            storeEditLocation.text = "Latitude: ${it.latitude} | Longitude: ${it.longitude}"
+            storeEditLocation.text = getString(R.string.locationCoordinateTemplate, it.latitude, it.longitude)
         }.addOnFailureListener {
             showSnackbar(getString(R.string.locationRetrievalError))
         }
