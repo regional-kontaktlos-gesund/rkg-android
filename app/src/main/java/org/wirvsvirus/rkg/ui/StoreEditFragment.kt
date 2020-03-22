@@ -28,6 +28,11 @@ class StoreEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val fromRegistration = arguments?.getBoolean(KEY_FROM_REGISTRATION, false) ?: false
+        if (fromRegistration) {
+            storeEditOwnerCard.visibility = View.GONE
+        }
+
         storePickOpeningStartButton.setOnClickListener {
             val listener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                 startDate = String.format("%02d:%02d Uhr", hourOfDay, minute)
@@ -75,5 +80,9 @@ class StoreEditFragment : Fragment() {
             storeSaturdayOpenSwitch,
             storeSundayOpenSwitch
         )
+    }
+
+    companion object {
+        const val KEY_FROM_REGISTRATION = "fromRegistration"
     }
 }

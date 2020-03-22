@@ -16,6 +16,7 @@ import org.wirvsvirus.rkg.getPrefs
 import org.wirvsvirus.rkg.model.Vendor
 import org.wirvsvirus.rkg.model.VendorSignup
 import org.wirvsvirus.rkg.putVendorId
+import org.wirvsvirus.rkg.ui.StoreEditFragment.Companion.KEY_FROM_REGISTRATION
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -65,7 +66,9 @@ class LoginRegisterFragment : Fragment() {
                 }
 
                 requireContext().getPrefs().putVendorId(vendorId)
-                findNavController().navigate(R.id.storeEditFragment)
+
+                val bundle = Bundle().apply { putBoolean(KEY_FROM_REGISTRATION, true) }
+                findNavController().navigate(R.id.storeEditFragment, bundle)
             }
         })
     }
