@@ -183,16 +183,22 @@ class StoreEditFragment : Fragment() {
     }
 
     private fun saveData() {
-        if (startDate == null || endDate == null || getListOfStoreOpenSwitches().all { !it.isChecked }) {
-            showSnackbar(getString(R.string.openingTimesEmptyError))
-        } else {
+        if (areAllManadatoryFieldsFilled()) {
             if (fromRegistration) {
                 createStore()
             } else {
                 updateStore()
             }
+        } else {
+            showSnackbar(getString(R.string.openingTimesEmptyError))
         }
     }
+
+    private fun areAllManadatoryFieldsFilled(): Boolean {
+        return startDate != null && endDate != null && getListOfStoreOpenSwitches().any { it.isChecked }
+                && storeEditNameEditText.text.toString().isNotBlank()
+    }
+
 
     private fun createStore() {
         context?.getPrefs()?.getVendorId()?.let { vendorId ->
