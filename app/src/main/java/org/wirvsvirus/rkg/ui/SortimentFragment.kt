@@ -13,6 +13,8 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_sortiment.*
 import org.wirvsvirus.rkg.R
 import org.wirvsvirus.rkg.api.RkgClient
+import org.wirvsvirus.rkg.getPrefs
+import org.wirvsvirus.rkg.getStoreId
 import org.wirvsvirus.rkg.model.Product
 import org.wirvsvirus.rkg.ui.adapter.SortimentAdapter
 import retrofit2.Call
@@ -133,8 +135,7 @@ class SortimentFragment : Fragment() {
     }
 
     private fun loadProducts(scrollToBottom: Boolean) {
-        // TODO use our storeId
-        RkgClient.service.getProducts("5e7637033530e88ed953fd1c").enqueue(object : Callback<List<Product>> {
+        RkgClient.service.getProducts(requireContext().getPrefs().getStoreId()!!).enqueue(object : Callback<List<Product>> {
             override fun onFailure(call: Call<List<Product>>, t: Throwable) {
                 Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
             }
@@ -166,12 +167,11 @@ class SortimentFragment : Fragment() {
         val priceString = dialog.findViewById<TextInputEditText>(R.id.productPrice)?.text!!.toString()
         val price = (priceString.replace(',', '.').toDouble() * 100).roundToLong()
 
-        // TODO use our storeId
         if (editingProduct == null) {
             val newProduct = Product(
                 null, name, type, amount, price, "none"
             )
-            RkgClient.service.addProduct("5e7637033530e88ed953fd1c", newProduct).enqueue(object : Callback<Void>{
+            RkgClient.service.addProduct(requireContext().getPrefs().getStoreId()!!, newProduct).enqueue(object : Callback<Void>{
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
                 }
@@ -189,7 +189,7 @@ class SortimentFragment : Fragment() {
             val newProduct = Product(
                 editingProduct!!._id, name, type, amount, price, editingProduct!!.stock
             )
-            RkgClient.service.updateProduct("5e7637033530e88ed953fd1c", editingProduct!!._id!!, newProduct).enqueue(object : Callback<Void> {
+            RkgClient.service.updateProduct(requireContext().getPrefs().getStoreId()!!, editingProduct!!._id!!, newProduct).enqueue(object : Callback<Void> {
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
                 }
