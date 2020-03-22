@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_store_edit.*
 import org.wirvsvirus.rkg.R
@@ -58,6 +59,8 @@ class StoreEditFragment : Fragment() {
                 ).show()
 
                 // TODO API-Call einbauen
+
+                findNavController().navigate(R.id.storeFragment)
             }
         }
     }

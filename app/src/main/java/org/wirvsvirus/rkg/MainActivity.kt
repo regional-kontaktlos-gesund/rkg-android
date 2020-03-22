@@ -37,5 +37,7 @@ class MainActivity : AppCompatActivity() {
         bottomNav.visibility = View.VISIBLE
     }
 
+    fun isBottomNavShown(): Boolean = bottomNav.visibility == View.VISIBLE
+
     override fun onSupportNavigateUp(): Boolean = findNavController(R.id.navHost).navigateUp()
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_store.*
+import org.wirvsvirus.rkg.MainActivity
 import org.wirvsvirus.rkg.R
 import org.wirvsvirus.rkg.model.OpeningHour
 
@@ -20,6 +21,10 @@ class StoreFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        if ((activity as? MainActivity)?.isBottomNavShown() == false) {
+            (activity as? MainActivity)?.showBottomNav()
+        }
 
         storeMap.onCreate(savedInstanceState)
         storeMap.getMapAsync { map ->
