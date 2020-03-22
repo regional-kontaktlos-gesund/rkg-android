@@ -14,3 +14,11 @@ fun SharedPreferences.putVendorId(vendorId: String) {
 
 fun SharedPreferences.getVendorId(): String? =
     getString("vendorId", null)
+
+@SuppressLint("ApplySharedPref")
+fun SharedPreferences.putVendorEmail(vendorEmail: String) {
+    edit().putString("vendorEmail", vendorEmail).commit()
+}
+
+fun SharedPreferences.getVendorEmail(): String? =
+    getString("vendorEmail", null)

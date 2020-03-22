@@ -9,13 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_login_register.*
-import org.wirvsvirus.rkg.MainActivity
-import org.wirvsvirus.rkg.R
+import org.wirvsvirus.rkg.*
 import org.wirvsvirus.rkg.api.RkgClient
-import org.wirvsvirus.rkg.getPrefs
 import org.wirvsvirus.rkg.model.Vendor
 import org.wirvsvirus.rkg.model.VendorSignup
-import org.wirvsvirus.rkg.putVendorId
 import org.wirvsvirus.rkg.ui.StoreEditFragment.Companion.KEY_FROM_REGISTRATION
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,6 +63,7 @@ class LoginRegisterFragment : Fragment() {
                 }
 
                 requireContext().getPrefs().putVendorId(vendorId)
+                requireContext().getPrefs().putVendorEmail(loginRegisterMail.text.toString())
 
                 val bundle = Bundle().apply { putBoolean(KEY_FROM_REGISTRATION, true) }
                 findNavController().navigate(R.id.storeEditFragment, bundle)

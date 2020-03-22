@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -42,37 +43,24 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/storeEditNameWrapper"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <TextView
+                    android:id="@+id/storeEditOwnerName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:hint="Name"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/storeEditOwnerTitle">
+                    app:layout_constraintTop_toBottomOf="@id/storeEditOwnerTitle"
+                    tools:text="Hans Meier" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/storeEditEmailWrapper"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <TextView
+                    android:id="@+id/storeEditOwnerEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:hint="E-Mail"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/storeEditNameWrapper">
+                    app:layout_constraintTop_toBottomOf="@id/storeEditOwnerName"
+                    tools:text="hans.meier@erdbeerfreunde.de" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -96,7 +84,7 @@
                     android:id="@+id/storeEditLocationTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Standort"
+                    android:text="@string/location"
                     android:textColor="#000"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Standort ermitteln"
+                    android:text="@string/retrieveLocation"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/storeEditLocationTitle" />
@@ -116,8 +104,8 @@
                     android:id="@+id/storeEditLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/storeEditFindLocation" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -156,7 +144,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/lightGrey"
-                    android:text="Öffnet"
+                    android:text="@string/opens"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/storeEditOpeningHoursTitle" />
 
@@ -167,7 +155,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
                     android:backgroundTint="@color/lightGrey"
-                    android:text="Schließt"
+                    android:text="@string/closes"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/storeEditOpeningHoursTitle" />
 
@@ -176,7 +164,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Bitte wählen"
+                    android:text="@string/pleaseSelect"
                     app:layout_constraintEnd_toEndOf="@id/storePickOpeningStartButton"
                     app:layout_constraintStart_toStartOf="@id/storePickOpeningStartButton"
                     app:layout_constraintTop_toBottomOf="@id/storePickOpeningStartButton" />
@@ -186,7 +174,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Bitte wählen"
+                    android:text="@string/pleaseSelect"
                     app:layout_constraintEnd_toEndOf="@id/storePickOpeningEndButton"
                     app:layout_constraintStart_toStartOf="@id/storePickOpeningEndButton"
                     app:layout_constraintTop_toBottomOf="@id/storePickOpeningEndButton" />
@@ -207,7 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="24dp"
-                    android:text="Montag"
+                    android:text="@string/monday"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/storeMondayOpenSwitch"
                     app:layout_constraintTop_toBottomOf="@id/storePickOpeningStartLabel" />
@@ -228,7 +216,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
-                    android:text="Dienstag"
+                    android:text="@string/tuesday"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/storeTuesdayOpenSwitch"
                     app:layout_constraintTop_toBottomOf="@id/storeEditOpeningTimesMondayLabel" />
@@ -249,7 +237,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
-                    android:text="Mittwoch"
+                    android:text="@string/wednesday"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/storeWednesdayOpenSwitch"
                     app:layout_constraintTop_toBottomOf="@id/storeEditOpeningTimesTuesdayLabel" />
@@ -270,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
-                    android:text="Donnerstag"
+                    android:text="@string/thursday"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/storeThursdayOpenSwitch"
                     app:layout_constraintTop_toBottomOf="@id/storeEditOpeningTimesWednesdayLabel" />
@@ -291,7 +279,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
-                    android:text="Freitag"
+                    android:text="@string/friday"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/storeFridayOpenSwitch"
                     app:layout_constraintTop_toBottomOf="@id/storeEditOpeningTimesThursdayLabel" />
@@ -312,7 +300,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
-                    android:text="Samstag"
+                    android:text="@string/saturday"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/storeSaturdayOpenSwitch"
                     app:layout_constraintTop_toBottomOf="@id/storeEditOpeningTimesFridayLabel" />
@@ -333,7 +321,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
-                    android:text="Sonntag"
+                    android:text="@string/sunday"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/storeSundayOpenSwitch"
                     app:layout_constraintTop_toBottomOf="@id/storeEditOpeningTimesSaturdayLabel" />
@@ -341,17 +329,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <Button
-            android:id="@+id/storeEditSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="Speichern"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/storeEditOpeningHoursCard" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

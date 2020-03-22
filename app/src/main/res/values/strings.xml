@@ -46,6 +46,7 @@
     <string name="genericError">Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.</string>
     <string name="locationPermissionDeniedError">Standort kann nicht ohne Berechtigung ermittelt werden</string>
     <string name="locationRetrievalError">Fehler beim Ermitteln des Standorts</string>
+    <string name="locationCoordinateTemplate">Breitengrad: %1$f | Längengrad: %2$f</string>
 
     <string name="priceTemplate">Gesamtpreis: %s</string>
 
@@ -58,4 +59,17 @@
     <string name="cancel">Abbrechen</string>
     <string name="amountHint">Menge</string>
     <string name="priceHint">Preis</string>
+
+    <string name="location">Standort</string>
+    <string name="retrieveLocation">Standort ermitteln</string>
+    <string name="monday">Montag</string>
+    <string name="tuesday">Dienstag</string>
+    <string name="wednesday">Mittwoch</string>
+    <string name="thursday">Donnerstag</string>
+    <string name="friday">Freitag</string>
+    <string name="saturday">Samstag</string>
+    <string name="sunday">Sonntag</string>
+    <string name="opens">Öffnet</string>
+    <string name="closes">Schließt</string>
+    <string name="pleaseSelect">Bitte wählen</string>
 </resources>
