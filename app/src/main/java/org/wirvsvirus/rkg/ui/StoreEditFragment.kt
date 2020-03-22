@@ -17,11 +17,16 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_store_edit.*
 import org.wirvsvirus.rkg.R
+import org.wirvsvirus.rkg.getPrefs
+import org.wirvsvirus.rkg.getVendorEmail
+import org.wirvsvirus.rkg.model.OpeningHour
+import org.wirvsvirus.rkg.model.Store
 
 class StoreEditFragment : Fragment() {
 
     private var startDate: String? = null
     private var endDate: String? = null
+    private var loadedStore: Store? = null
     private lateinit var fusedLocationProvider: FusedLocationProviderClient
 
     override fun onCreateView(
@@ -40,6 +45,9 @@ class StoreEditFragment : Fragment() {
         if (fromRegistration) {
             storeEditOwnerCard.visibility = View.GONE
         }
+
+        loadedStore = arguments?.getSerializable(StoreFragment.KEY_STORE_OBJECT) as? Store
+        loadStoreDataToView()
 
         storePickOpeningStartButton.setOnClickListener {
             val listener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
@@ -78,6 +86,36 @@ class StoreEditFragment : Fragment() {
         }
     }
 
+    private fun loadStoreDataToView() {
+        loadedStore?.let { store ->
+            storeEditLocation.text = "Latitude: ${store.latitude} | Longitude: ${store.longitude}"
+            loadOpeningHoursToView(store.openingHours)
+            storeEditOwnerName.text = store.name
+            storeEditOwnerEmail.text = context?.getPrefs()?.getVendorEmail() ?: ""
+        }
+    }
+
+    private fun loadOpeningHoursToView(openingHours: List<OpeningHour>) {
+        openingHours.forEach {
+            when(it.day) {
+                "monday" -> storeMondayOpenSwitch.isChecked = true
+                "tuesday" -> storeTuesdayOpenSwitch.isChecked = true
+                "wednesday" -> storeWednesdayOpenSwitch.isChecked = true
+                "thursday" -> storeThursdayOpenSwitch.isChecked = true
+                "friday" -> storeFridayOpenSwitch.isChecked = true
+                "saturday" -> storeSaturdayOpenSwitch.isChecked = true
+                "sunday" -> storeSundayOpenSwitch.isChecked = true
+            }
+        }
+
+        // Aktuell unterstützen wir nur eine einzige Öffnungszeit, daher wird die Erstbeste genommen
+        startDate = openingHours[0].from
+        storePickOpeningStartLabel.text = startDate
+
+        endDate = openingHours[0].to
+        storePickOpeningEndLabel.text = endDate
+    }
+
     private fun getListOfStoreOpenSwitches(): List<SwitchCompat> {
         return listOf(
             storeMondayOpenSwitch,
@@ -100,11 +138,17 @@ class StoreEditFragment : Fragment() {
     }
 
     private fun isLocationPermissionGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestLocationPermission() {
-        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_REQUEST_CODE)
+        requestPermissions(
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_REQUEST_CODE
+        )
     }
 
     override fun onRequestPermissionsResult(

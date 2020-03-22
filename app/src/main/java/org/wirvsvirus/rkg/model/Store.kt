@@ -1,5 +1,7 @@
 package org.wirvsvirus.rkg.model
 
+import java.io.Serializable
+
 data class Store(
     val _id: String?,
     val name: String,
@@ -10,4 +12,4 @@ data class Store(
     val products: List<Product>,
     val openingHours: List<OpeningHour>,
     val opened: Boolean
-)
+) : Serializable
