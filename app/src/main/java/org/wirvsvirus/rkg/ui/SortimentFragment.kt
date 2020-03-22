@@ -6,10 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sortiment.*
 import org.wirvsvirus.rkg.R
-import org.wirvsvirus.rkg.model.SortimentItem
+import org.wirvsvirus.rkg.api.RkgClient
+import org.wirvsvirus.rkg.model.Product
 import org.wirvsvirus.rkg.ui.adapter.SortimentAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SortimentFragment : Fragment() {
 
@@ -29,12 +34,21 @@ class SortimentFragment : Fragment() {
         sortimentList.layoutManager = LinearLayoutManager(context)
         sortimentList.adapter = adapter
 
-        // TODO remove mock
-        adapter.items = listOf(
-            SortimentItem("Erdbeeren", "erdbeeren", 300, "full", "500g"),
-            SortimentItem("Spargel", "spargel", 500, "medium", "500g"),
-            SortimentItem("Kirschen", "kirschen", 400, "none", "500g")
-        )
-        adapter.notifyDataSetChanged()
+        // TODO use our storeId
+        RkgClient.service.getProducts("5e7637033530e88ed953fd1c").enqueue(object : Callback<List<Product>> {
+            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+            }
+
+            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+                val products = response.body() ?: run {
+                    Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                    return
+                }
+
+                adapter.items = products
+                adapter.notifyDataSetChanged()
+            }
+        })
     }
 }

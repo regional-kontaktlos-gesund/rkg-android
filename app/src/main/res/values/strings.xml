@@ -23,8 +23,9 @@
     <string name="email_label">E-Mail:</string>
     <string name="name_label">Name:</string>
 
-    <string name="availabilityFull">Genügend</string>
-    <string name="availabilityMedium">Wenig</string>
+    <string name="availabilityFull">Viel</string>
+    <string name="availabilityMedium">Mittel</string>
+    <string name="availabilityLow">Wenig</string>
     <string name="availabilityNone">Keine</string>
     <string name="edit">Bearbeiten</string>
 
