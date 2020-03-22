@@ -29,6 +29,9 @@ interface RkgService {
     @DELETE("stores/{storeId}")
     fun deleteStore(@Path("storeId") storeId: String): Call<Void>
 
+    @GET("stores/{storeId}")
+    fun getStore(@Path("storeId") storeId: String): Call<Store>
+
     // Products
     @GET("stores/{storeId}/products")
     fun getProducts(@Path("storeId") storeId: String): Call<List<Product>>

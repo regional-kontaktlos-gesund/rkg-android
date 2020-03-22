@@ -53,14 +53,14 @@ class LoginRegisterFragment : Fragment() {
         ).enqueue(object : Callback<Vendor> {
             override fun onFailure(call: Call<Vendor>, t: Throwable) {
                 loginRegisterbutton.isEnabled = true
-                Snackbar.make(loginRegisterRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                Snackbar.make(loginRegisterRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
             }
 
             @SuppressLint("ApplySharedPref")
             override fun onResponse(call: Call<Vendor>, response: Response<Vendor>) {
                 val vendorId = response.body()?._id
                 if (vendorId == null) {
-                    Snackbar.make(loginRegisterRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(loginRegisterRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
                     loginRegisterbutton.isEnabled = true
                     return
                 }

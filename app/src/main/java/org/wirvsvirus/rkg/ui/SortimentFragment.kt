@@ -37,12 +37,12 @@ class SortimentFragment : Fragment() {
         // TODO use our storeId
         RkgClient.service.getProducts("5e7637033530e88ed953fd1c").enqueue(object : Callback<List<Product>> {
             override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
                 val products = response.body() ?: run {
-                    Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(sortimentRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
                     return
                 }
 

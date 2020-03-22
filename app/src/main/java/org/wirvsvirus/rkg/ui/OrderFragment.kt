@@ -10,9 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_orders.*
 import org.wirvsvirus.rkg.R
 import org.wirvsvirus.rkg.api.RkgClient
-import org.wirvsvirus.rkg.api.RkgService
 import org.wirvsvirus.rkg.model.Order
-import org.wirvsvirus.rkg.model.OrderItem
 import org.wirvsvirus.rkg.model.OrderWithProducts
 import org.wirvsvirus.rkg.ui.adapter.OrderAdapter
 import retrofit2.Call
@@ -44,12 +42,12 @@ class OrderFragment : Fragment() {
     private fun getOrders() {
         RkgClient.service.getAllOrders().enqueue(object : Callback<List<Order>> {
             override fun onFailure(call: Call<List<Order>>, t: Throwable) {
-                Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<List<Order>>, response: Response<List<Order>>) {
                 val allOrders = response.body() ?: run {
-                    Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
                     return
                 }
 
@@ -66,7 +64,7 @@ class OrderFragment : Fragment() {
         allOrders.first().let {
             RkgClient.service.getOrder(it._id).enqueue(object : Callback<OrderWithProducts> {
                 override fun onFailure(call: Call<OrderWithProducts>, t: Throwable) {
-                    Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
                     allOrders.removeAt(0)
                     loadOrderDetails(allOrders)
                 }
@@ -76,7 +74,7 @@ class OrderFragment : Fragment() {
                     response: Response<OrderWithProducts>
                 ) {
                     val order = response.body() ?: run {
-                        Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                        Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
                         return
                     }
                     adapter.items.add(order)
