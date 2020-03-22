@@ -29,7 +29,7 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
         val item = items[position]
 
         holder.codeWord.text = item.code
-        holder.orderTotalPrice.text = holder.orderTotalPrice.resources.getString(R.string.priceTemplate, formatter.format(item.sumTotal/100f))
+        holder.orderTotalPrice.text = formatter.format(item.sumTotal/100f)
 
         holder.orderItemContainer.removeAllViews()
         item.items.forEach {

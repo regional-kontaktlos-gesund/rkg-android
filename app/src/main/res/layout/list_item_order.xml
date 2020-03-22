@@ -44,7 +44,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/orderItemCodeWord"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/orderItemCodeWord"
-            tools:text="Gesamtpreis: 37,00 €" />
+            tools:text="37,00 €" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

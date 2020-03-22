@@ -48,8 +48,6 @@
     <string name="locationRetrievalError">Fehler beim Ermitteln des Standorts</string>
     <string name="locationCoordinateTemplate">Breitengrad: %1$f | Längengrad: %2$f</string>
 
-    <string name="priceTemplate">Gesamtpreis: %s</string>
-
     <string-array name="productTypes">
         <item>Spargel</item>
         <item>Erdbeere</item>
