@@ -21,7 +21,7 @@ interface RkgService {
     fun getAllStores(): Call<List<Store>>
 
     @POST("stores")
-    fun createStore(@Body store: Store): Call<Void>
+    fun createStore(@Body requestModel: CreateStoreRequestModel): Call<Store>
 
     @PATCH("stores/{storeId}")
     fun updateStore(@Path("storeId") storeId: String, @Body store: Store): Call<Void>

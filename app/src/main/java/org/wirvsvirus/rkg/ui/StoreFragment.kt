@@ -42,7 +42,7 @@ class StoreFragment : Fragment() {
 
         storeMap.onCreate(savedInstanceState)
 
-        context?.getPrefs()?.getVendorId()?.let {
+        context?.getPrefs()?.getStoreId()?.let {
             RkgClient.service.getStore(it).enqueue(object : Callback<Store> {
                 override fun onFailure(call: Call<Store>, t: Throwable) {
                     Snackbar.make(storeRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()

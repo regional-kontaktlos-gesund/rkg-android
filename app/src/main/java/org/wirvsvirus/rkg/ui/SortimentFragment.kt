@@ -1,7 +1,6 @@
 package org.wirvsvirus.rkg.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -126,7 +125,7 @@ class SortimentFragment : Fragment() {
             val product = editingProduct!!
             val items = requireContext().resources.getStringArray(R.array.productTypes)
             dialog.findViewById<AppCompatSpinner>(R.id.productTypeSpinner)!!.setSelection(items.indexOfFirst { it == product.type })
-            dialog.findViewById<TextInputEditText>(R.id.productAmount)!!.setText(product.unit)
+            dialog.findViewById<TextInputEditText>(R.id.storeEditNameEditText)!!.setText(product.unit)
             dialog.findViewById<TextInputEditText>(R.id.productName)!!.setText(product.name)
             dialog.findViewById<TextInputEditText>(R.id.productPrice)!!.setText(NumberFormat.getNumberInstance().format(product.price/100f).replace('.', ','))
         }
@@ -162,7 +161,7 @@ class SortimentFragment : Fragment() {
         val dialog = addEditDialog!!
 
         val type = dialog.findViewById<AppCompatSpinner>(R.id.productTypeSpinner)?.selectedItem as String
-        val amount = dialog.findViewById<TextInputEditText>(R.id.productAmount)?.text!!.toString()
+        val amount = dialog.findViewById<TextInputEditText>(R.id.storeEditNameEditText)?.text!!.toString()
         val name = dialog.findViewById<TextInputEditText>(R.id.productName)?.text!!.toString()
         val priceString = dialog.findViewById<TextInputEditText>(R.id.productPrice)?.text!!.toString()
         val price = (priceString.replace(',', '.').toDouble() * 100).roundToLong()

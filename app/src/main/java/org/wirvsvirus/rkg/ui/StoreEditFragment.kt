@@ -1,6 +1,7 @@
 package org.wirvsvirus.rkg.ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -14,18 +15,22 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_store_edit.*
-import org.wirvsvirus.rkg.R
-import org.wirvsvirus.rkg.getPrefs
-import org.wirvsvirus.rkg.getVendorEmail
+import org.wirvsvirus.rkg.*
+import org.wirvsvirus.rkg.api.RkgClient
+import org.wirvsvirus.rkg.model.CreateStoreRequestModel
 import org.wirvsvirus.rkg.model.OpeningHour
 import org.wirvsvirus.rkg.model.Store
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class StoreEditFragment : Fragment() {
 
     private var startDate: String? = null
     private var endDate: String? = null
-    private var loadedStore: Store? = null
+    private lateinit var loadedStore: Store
     private lateinit var fusedLocationProvider: FusedLocationProviderClient
+    private var fromRegistration = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +46,11 @@ class StoreEditFragment : Fragment() {
 
         fusedLocationProvider = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        val fromRegistration = arguments?.getBoolean(KEY_FROM_REGISTRATION, false) ?: false
-        if (fromRegistration) {
-            storeEditOwnerCard.visibility = View.GONE
-        }
+        fromRegistration = arguments?.getBoolean(KEY_FROM_REGISTRATION, false) ?: false
 
-        loadedStore = arguments?.getSerializable(StoreFragment.KEY_STORE_OBJECT) as? Store
+        loadedStore = (arguments?.getSerializable(StoreFragment.KEY_STORE_OBJECT) as? Store)
+            ?: Store(null, "", "", 0.0, 0.0, "", emptyList(), emptyList(), true)
+
         loadStoreDataToView()
 
         storePickOpeningStartButton.setOnClickListener {
@@ -89,32 +93,35 @@ class StoreEditFragment : Fragment() {
 
     private fun loadStoreDataToView() {
         loadedStore?.let { store ->
-            storeEditLocation.text = getString(R.string.locationCoordinateTemplate, store.latitude, store.longitude)
+            if (store.latitude != -1.0 && store.longitude != -1.0)
+                storeEditLocation.text =
+                    getString(R.string.locationCoordinateTemplate, store.latitude, store.longitude)
             loadOpeningHoursToView(store.openingHours)
-            storeEditOwnerName.text = store.name
-            storeEditOwnerEmail.text = context?.getPrefs()?.getVendorEmail() ?: ""
+            storeEditNameEditText.setText(store.name)
         }
     }
 
     private fun loadOpeningHoursToView(openingHours: List<OpeningHour>) {
-        openingHours.forEach {
-            when(it.day) {
-                "monday" -> storeMondayOpenSwitch.isChecked = true
-                "tuesday" -> storeTuesdayOpenSwitch.isChecked = true
-                "wednesday" -> storeWednesdayOpenSwitch.isChecked = true
-                "thursday" -> storeThursdayOpenSwitch.isChecked = true
-                "friday" -> storeFridayOpenSwitch.isChecked = true
-                "saturday" -> storeSaturdayOpenSwitch.isChecked = true
-                "sunday" -> storeSundayOpenSwitch.isChecked = true
+        if (openingHours.isNotEmpty()) {
+            openingHours.forEach {
+                when (it.day) {
+                    "monday" -> storeMondayOpenSwitch.isChecked = true
+                    "tuesday" -> storeTuesdayOpenSwitch.isChecked = true
+                    "wednesday" -> storeWednesdayOpenSwitch.isChecked = true
+                    "thursday" -> storeThursdayOpenSwitch.isChecked = true
+                    "friday" -> storeFridayOpenSwitch.isChecked = true
+                    "saturday" -> storeSaturdayOpenSwitch.isChecked = true
+                    "sunday" -> storeSundayOpenSwitch.isChecked = true
+                }
             }
+
+            // Aktuell unterstützen wir nur eine einzige Öffnungszeit, daher wird die Erstbeste genommen
+            startDate = openingHours[0].from
+            storePickOpeningStartLabel.text = startDate
+
+            endDate = openingHours[0].to
+            storePickOpeningEndLabel.text = endDate
         }
-
-        // Aktuell unterstützen wir nur eine einzige Öffnungszeit, daher wird die Erstbeste genommen
-        startDate = openingHours[0].from
-        storePickOpeningStartLabel.text = startDate
-
-        endDate = openingHours[0].to
-        storePickOpeningEndLabel.text = endDate
     }
 
     private fun getListOfStoreOpenSwitches(): List<SwitchCompat> {
@@ -129,10 +136,13 @@ class StoreEditFragment : Fragment() {
         )
     }
 
+    @SuppressLint("MissingPermission")
     private fun retrieveCurrentLocation() {
         fusedLocationProvider.lastLocation.addOnSuccessListener {
             // TODO: Do something with the data
-            storeEditLocation.text = getString(R.string.locationCoordinateTemplate, it.latitude, it.longitude)
+            storeEditLocation.text =
+                getString(R.string.locationCoordinateTemplate, it.latitude, it.longitude)
+            loadedStore = loadedStore.copy(latitude = it.latitude, longitude = it.longitude)
         }.addOnFailureListener {
             showSnackbar(getString(R.string.locationRetrievalError))
         }
@@ -172,11 +182,86 @@ class StoreEditFragment : Fragment() {
         if (startDate == null || endDate == null || getListOfStoreOpenSwitches().all { !it.isChecked }) {
             showSnackbar(getString(R.string.openingTimesEmptyError))
         } else {
-            showSnackbar(getString(R.string.openingTimesSaved))
+            if (fromRegistration) {
+                createStore()
+            } else {
+                updateStore()
+            }
+        }
+    }
 
-            // TODO API-Call einbauen
+    private fun createStore() {
+        context?.getPrefs()?.getVendorId()?.let { vendorId ->
+            RkgClient.service.createStore(
+                CreateStoreRequestModel(
+                    storeEditNameEditText.text.toString(),
+                    vendorId,
+                    loadedStore.latitude,
+                    loadedStore.longitude
+                )
+            ).enqueue(object : Callback<Store> {
+                override fun onFailure(call: Call<Store>, t: Throwable) {
+                    Snackbar.make(rootViewStoreEdit, R.string.genericError, Snackbar.LENGTH_SHORT)
+                        .show()
+                }
 
-            findNavController().navigate(R.id.action_storeEditFragment_to_storeFragment)
+                override fun onResponse(call: Call<Store>, response: Response<Store>) {
+                    if (response.isSuccessful) {
+                        val createdStore = response.body() ?: let {
+                            Snackbar.make(
+                                    rootViewStoreEdit,
+                                    R.string.shopDataSaved,
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                .show()
+                            return
+                        }
+                        createdStore._id?.let {
+                            context?.getPrefs()?.putStoreId(it)
+                            loadedStore = loadedStore.copy(_id = it, vendor = createdStore.vendor, name = createdStore.name)
+                        }
+                        updateStore()
+                    } else {
+                        Snackbar.make(rootViewStoreEdit, R.string.genericError, Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
+        }
+    }
+
+    private fun updateStore() {
+        context?.getPrefs()?.getStoreId()?.let { storeId ->
+            RkgClient.service.updateStore(storeId, loadedStore)
+                .enqueue(object : Callback<Void> {
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Snackbar.make(
+                                rootViewStoreEdit,
+                                R.string.genericError,
+                                Snackbar.LENGTH_SHORT
+                            )
+                            .show()
+                    }
+
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            Snackbar.make(
+                                    rootViewStoreEdit,
+                                    R.string.shopDataSaved,
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                .show()
+                            findNavController().navigate(R.id.action_storeEditFragment_to_storeFragment)
+                        } else {
+                            Snackbar.make(
+                                    rootViewStoreEdit,
+                                    R.string.genericError,
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                .show()
+                        }
+                    }
+                })
         }
     }
 
