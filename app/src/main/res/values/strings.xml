@@ -37,7 +37,12 @@
     <string name="errorName">Name ungültig</string>
     <string name="errorPassword">Passwort ungültig</string>
 
+    <string name="openingTimesSaved">Öffnungszeiten gespeichert</string>
+    <string name="openingTimesEmptyError">Bitte wählen Sie Ihre Öffnungszeiten aus</string>
+
     <string name="genericError">Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.</string>
+    <string name="locationPermissionDeniedError">Standort kann nicht ohne Berechtigung ermittelt werden</string>
+    <string name="locationRetrievalError">Fehler beim Ermitteln des Standorts</string>
 
     <string name="priceTemplate">Gesamtpreis: %s</string>
 </resources>
