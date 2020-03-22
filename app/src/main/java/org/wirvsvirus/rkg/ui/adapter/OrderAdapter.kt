@@ -9,10 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.wirvsvirus.rkg.R
 import org.wirvsvirus.rkg.model.Order
+import org.wirvsvirus.rkg.model.OrderWithProducts
+import java.text.NumberFormat
+import java.util.*
 
 class OrderAdapter : RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
 
-    var items: List<Order> = emptyList()
+    private val formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY)
+
+    var items: MutableList<OrderWithProducts> = mutableListOf()
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,20 +29,32 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
         val item = items[position]
 
         holder.codeWord.text = item.code
+        holder.orderTotalPrice.text = holder.orderTotalPrice.resources.getString(R.string.priceTemplate, formatter.format(item.sumTotal/100))
 
+        holder.orderItemContainer.removeAllViews()
         item.items.forEach {
             val orderProduct = View.inflate(holder.orderItemContainer.context, R.layout.list_item_order_product, null)
             val orderProductIcon: ImageView = orderProduct.findViewById(R.id.orderItemProductIcon)
             val orderProductText: TextView = orderProduct.findViewById(R.id.orderItemProductText)
 
-            orderProductText.text = "${it.amount}x ${it.name}"
+            orderProductText.text = "${it.amount}x ${it.product.name}"
+            orderProductIcon.setImageResource(mapTypeToImage(it.product.type))
 
             holder.orderItemContainer.addView(orderProduct)
+        }
+    }
+
+    private fun mapTypeToImage(type: String?): Int {
+        return when (type) {
+            "Spargel" -> R.drawable.illu_asparagus
+            "Erdbeere" -> R.drawable.illu_strawberry
+            else -> R.drawable.ic_launcher
         }
     }
 
     inner class ViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
         val codeWord: TextView = rootView.findViewById(R.id.orderItemCodeWord)
         val orderItemContainer: LinearLayout = rootView.findViewById(R.id.orderItemContainer)
+        val orderTotalPrice: TextView = rootView.findViewById(R.id.orderTotalPrice)
     }
 }

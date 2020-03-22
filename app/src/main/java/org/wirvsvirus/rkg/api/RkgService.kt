@@ -1,9 +1,6 @@
 package org.wirvsvirus.rkg.api
 
-import org.wirvsvirus.rkg.model.Product
-import org.wirvsvirus.rkg.model.Store
-import org.wirvsvirus.rkg.model.Vendor
-import org.wirvsvirus.rkg.model.VendorSignup
+import org.wirvsvirus.rkg.model.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -27,22 +24,29 @@ interface RkgService {
     fun createStore(@Body store: Store): Call<Void>
 
     @PATCH("stores/{storeId}")
-    fun updateStore(@Path("storeId") storeId: Int, @Body store: Store): Call<Void>
+    fun updateStore(@Path("storeId") storeId: String, @Body store: Store): Call<Void>
 
     @DELETE("stores/{storeId}")
-    fun deleteStore(@Path("storeId") storeId: Int): Call<Void>
+    fun deleteStore(@Path("storeId") storeId: String): Call<Void>
 
     // Products
     @GET("stores/{storeId}/products")
-    fun getProducts(@Path("storeId") storeId: Int): Call<List<Product>>
+    fun getProducts(@Path("storeId") storeId: String): Call<List<Product>>
 
     @POST("stores/{storeId}/products")
-    fun addProduct(@Path("storeId") storeId: Int, @Body product: Product): Call<Void>
+    fun addProduct(@Path("storeId") storeId: String, @Body product: Product): Call<Void>
 
     @PATCH("stores/{storeId}/products/{productId}")
-    fun updateProduct(@Path("storeId") storeId: Int, @Path("productId") productId: Int, @Body product: Product): Call<Void>
+    fun updateProduct(@Path("storeId") storeId: String, @Path("productId") productId: String, @Body product: Product): Call<Void>
 
     @DELETE("stores/{storeId}/products/{productId}")
-    fun deleteProduct(@Path("storeId") storeId: Int, @Path("productId") productId: Int): Call<Void>
+    fun deleteProduct(@Path("storeId") storeId: String, @Path("productId") productId: String): Call<Void>
+
+    // Orders
+    @GET("orders")
+    fun getAllOrders(): Call<List<Order>>
+
+    @GET("orders/{orderId}")
+    fun getOrder(@Path("orderId") orderId: String): Call<OrderWithProducts>
 
 }

@@ -37,4 +37,6 @@
     <string name="errorPassword">Passwort ungültig</string>
 
     <string name="genericError">Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.</string>
+
+    <string name="priceTemplate">Gesamtpreis: %s</string>
 </resources>

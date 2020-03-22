@@ -6,11 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_orders.*
 import org.wirvsvirus.rkg.R
+import org.wirvsvirus.rkg.api.RkgClient
+import org.wirvsvirus.rkg.api.RkgService
 import org.wirvsvirus.rkg.model.Order
-import org.wirvsvirus.rkg.model.Product
+import org.wirvsvirus.rkg.model.OrderItem
+import org.wirvsvirus.rkg.model.OrderWithProducts
 import org.wirvsvirus.rkg.ui.adapter.OrderAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class OrderFragment : Fragment() {
 
@@ -30,12 +37,54 @@ class OrderFragment : Fragment() {
         orderList.layoutManager = LinearLayoutManager(context)
         orderList.adapter = adapter
 
-        // TODO remove mock
-        adapter.items = listOf(
-            Order(0, "1", "Geheimnis1", listOf(Product("Erdbeere", "Frucht", "300", 1000, 3)), "My Store", 1000),
-            Order(0, "2", "Geheimnis2", listOf(Product("Spargel", "Gemüse", "10", 5000, 2), Product("Erdbeere", "Frucht", "300", 1000, 3)), "My Store", 500),
-            Order(0, "3", "Geheimnis3", listOf(Product("Erdbeere", "Frucht", "300", 1000, 3)), "My Store", 700)
-        )
-        adapter.notifyDataSetChanged()
+        adapter.items.clear()
+        getOrders()
+    }
+
+    private fun getOrders() {
+        RkgClient.service.getAllOrders().enqueue(object : Callback<List<Order>> {
+            override fun onFailure(call: Call<List<Order>>, t: Throwable) {
+                Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+            }
+
+            override fun onResponse(call: Call<List<Order>>, response: Response<List<Order>>) {
+                val allOrders = response.body() ?: run {
+                    Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                    return
+                }
+
+                loadOrderDetails(allOrders.toMutableList())
+            }
+        })
+    }
+
+    private fun loadOrderDetails(allOrders: MutableList<Order>) {
+        if (allOrders.size == 0) {
+            return
+        }
+
+        allOrders.first().let {
+            RkgClient.service.getOrder(it._id).enqueue(object : Callback<OrderWithProducts> {
+                override fun onFailure(call: Call<OrderWithProducts>, t: Throwable) {
+                    Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                    allOrders.removeAt(0)
+                    loadOrderDetails(allOrders)
+                }
+
+                override fun onResponse(
+                    call: Call<OrderWithProducts>,
+                    response: Response<OrderWithProducts>
+                ) {
+                    val order = response.body() ?: run {
+                        Snackbar.make(ordersRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                        return
+                    }
+                    adapter.items.add(order)
+                    adapter.notifyDataSetChanged()
+                    allOrders.removeAt(0)
+                    loadOrderDetails(allOrders)
+                }
+            })
+        }
     }
 }
