@@ -26,6 +26,8 @@ class StoreFragment : Fragment() {
             (activity as? MainActivity)?.showBottomNav()
         }
 
+        (activity as? MainActivity)?.setSelectedBottomNavItem(R.id.navStore)
+
         storeMap.onCreate(savedInstanceState)
         storeMap.getMapAsync { map ->
             Log.d("main", "map is ready!")
@@ -75,7 +77,7 @@ class StoreFragment : Fragment() {
         storeOwnerName.text = "Hans Luft - Erdbeeren"
 
         storeEdit.setOnClickListener {
-            findNavController().navigate(R.id.storeEditFragment)
+            findNavController().navigate(R.id.action_storeFragment_to_storeEditFragment)
         }
     }
 

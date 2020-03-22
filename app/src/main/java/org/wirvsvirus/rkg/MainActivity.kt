@@ -3,6 +3,7 @@ package org.wirvsvirus.rkg
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.iterator
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnNavigationItemSelectedListener true
         }
+
+        bottomNav.setOnNavigationItemReselectedListener {
+            // Do nothing here to avoid recreation of fragments
+        }
     }
 
     fun hideBottomNav() {
@@ -38,6 +43,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun isBottomNavShown(): Boolean = bottomNav.visibility == View.VISIBLE
+
+    fun setSelectedBottomNavItem(itemId: Int) {
+        bottomNav.menu.iterator().forEach {
+            it.isChecked = it.itemId == itemId
+        }
+    }
 
     override fun onSupportNavigateUp(): Boolean = findNavController(R.id.navHost).navigateUp()
 }

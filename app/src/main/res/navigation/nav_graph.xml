@@ -23,7 +23,11 @@
         android:id="@+id/storeEditFragment"
         android:name="org.wirvsvirus.rkg.ui.StoreEditFragment"
         android:label="StoreEditFragment"
-        tools:layout="@layout/fragment_store_edit" />
+        tools:layout="@layout/fragment_store_edit" >
+        <action
+            android:id="@+id/action_storeEditFragment_to_storeFragment"
+            app:destination="@id/storeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginRegisterFragment"
         android:name="org.wirvsvirus.rkg.ui.LoginRegisterFragment"

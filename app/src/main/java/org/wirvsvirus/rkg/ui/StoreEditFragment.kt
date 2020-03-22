@@ -65,7 +65,7 @@ class StoreEditFragment : Fragment() {
 
                 // TODO API-Call einbauen
 
-                findNavController().navigate(R.id.storeFragment)
+                findNavController().navigate(R.id.action_storeEditFragment_to_storeFragment)
             }
         }
     }
