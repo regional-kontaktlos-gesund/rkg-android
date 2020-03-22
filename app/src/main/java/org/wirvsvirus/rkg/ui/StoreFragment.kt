@@ -13,7 +13,6 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_store.*
 import org.wirvsvirus.rkg.*
 import org.wirvsvirus.rkg.api.RkgClient
-import org.wirvsvirus.rkg.model.OpeningHour
 import org.wirvsvirus.rkg.model.Store
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,10 +49,9 @@ class StoreFragment : Fragment() {
 
                 override fun onResponse(call: Call<Store>, response: Response<Store>) {
                     loadedStore = response.body() ?: let {
-                        // TODO: Mock entfernen, Snackbar und return wieder einkommentieren
-                        getMockedStore()
-                        // Snackbar.make(storeRoot, R.string.genericError, Snackbar.LENGTH_SHORT).show()
-                        // return
+                        Snackbar.make(storeRoot, R.string.genericError, Snackbar.LENGTH_SHORT)
+                            .show()
+                        return
                     }
                     loadStoreDataToView()
                 }
@@ -117,30 +115,6 @@ class StoreFragment : Fragment() {
                 findNavController().navigate(R.id.action_storeFragment_to_storeEditFragment, bundle)
             }
         }
-    }
-
-    private fun getMockedStore(): Store {
-        val openingHours = listOf(
-            OpeningHour("monday", "07:00", "14:00"),
-            OpeningHour("tuesday", "10:00", "18:00"),
-            //OpeningHour("wednesday", "13:30", "19:30"),
-            OpeningHour("thursday", "15:00", "20:00"),
-            OpeningHour("friday", "09:00", "13:00"),
-            OpeningHour("saturday", "06:30", "12:00")
-            //OpeningHour("sunday", "06:00", "11:30")
-        )
-
-        return Store(
-            "1",
-            "Hans Luft - Erdbeeren",
-            "hans.luft@erdbeerbauer.de",
-            50.107795,
-            8.651872,
-            "stripe",
-            emptyList(),
-            openingHours,
-            true
-        )
     }
 
     override fun onResume() {

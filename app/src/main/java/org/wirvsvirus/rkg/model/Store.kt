@@ -8,7 +8,7 @@ data class Store(
     val vendor: String,
     val latitude: Double,
     val longitude: Double,
-    val stripeAccountId: String,
+    val stripeAccountId: String = "bla", // TODO Muss entfernt werden in Zukunft
     val products: List<Product>,
     val openingHours: List<OpeningHour>,
     val opened: Boolean

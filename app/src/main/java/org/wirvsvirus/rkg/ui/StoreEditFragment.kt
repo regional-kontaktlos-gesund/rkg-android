@@ -142,7 +142,7 @@ class StoreEditFragment : Fragment() {
             // TODO: Do something with the data
             storeEditLocation.text =
                 getString(R.string.locationCoordinateTemplate, it.latitude, it.longitude)
-            loadedStore = loadedStore.copy(latitude = it.latitude, longitude = it.longitude)
+            loadedStore = loadedStore.copy(latitude = it.latitude, longitude = it.longitude, stripeAccountId = "bla")
         }.addOnFailureListener {
             showSnackbar(getString(R.string.locationRetrievalError))
         }
@@ -218,7 +218,7 @@ class StoreEditFragment : Fragment() {
                         }
                         createdStore._id?.let {
                             context?.getPrefs()?.putStoreId(it)
-                            loadedStore = loadedStore.copy(_id = it, vendor = createdStore.vendor, name = createdStore.name)
+                            loadedStore = loadedStore.copy(_id = it, vendor = createdStore.vendor, name = createdStore.name, stripeAccountId = "bla")
                         }
                         updateStore()
                     } else {
@@ -231,6 +231,7 @@ class StoreEditFragment : Fragment() {
     }
 
     private fun updateStore() {
+        loadedStore = loadedStore.copy(name = storeEditNameEditText.text.toString(), stripeAccountId = "bla")
         context?.getPrefs()?.getStoreId()?.let { storeId ->
             RkgClient.service.updateStore(storeId, loadedStore)
                 .enqueue(object : Callback<Void> {
